@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const messages = require('../messages/userMessages');
+const messages = require('../utils/messages/userMessages');
 
 exports.createUser = async (req, res) => {
   try {
