@@ -1,30 +1,22 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const { config } = require('dotenv');
+const { connectToDatabase } = require('../utils/database');
+const messages = require('../messages/databaseMessages');
 require('dotenv').config();
 const app = express();
 
-// Configuração de middleware para ler JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Importação das rotas
 const userRoutes = require('./routes/userRoutes');
 
-// Rotas da API
-app.use('/createuser', userRoutes);
-app.use('/getuser', userRoutes);
-app.use('/getuserbyid', userRoutes);
-app.use('/updateuser', userRoutes);
-app.use('/deleteuserbyid', userRoutes);
+app.use('/api/users', userRoutes);
 
-const DB_USER = process.env.DB_USER;
-const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
-
-mongoose
-  .connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@data-processing-cluster.w64rnto.mongodb.net/?retryWrites=true&w=majority`)
+connectToDatabase()
   .then(() => {
-    app.listen(3000);
-    console.log("Conectamos ao MongoDB!");
+    app.listen(PORT, () => {
+      console.log(`Servidor rodando na porta ${PORT}`);
+    });
   })
-  .catch((err) => console.log(err));
+  .catch((error) => {
+    console.error(messages.UNABLE_TO_CONNECT, error);
+  });
