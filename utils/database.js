@@ -7,9 +7,8 @@ const connectToDatabase = async () => {
     const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
     const DB_NAME = process.env.DB_NAME;
 
-    // Conecta ao banco de dados
     await mongoose.connect(
-      `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.2g2hieg.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`,
+      `mongodb+srv://${DB_USER}:${DB_PASSWORD}${DB_NAME}/?retryWrites=true&w=majority`,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,

@@ -1,8 +1,9 @@
 const express = require('express');
-const { connectToDatabase } = require('../utils/database');
-const messages = require('../messages/databaseMessages');
+const { connectToDatabase } = require('./utils/database.js');
+const messages = require('./utils/messages/databaseMessages.js');
 require('dotenv').config();
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
